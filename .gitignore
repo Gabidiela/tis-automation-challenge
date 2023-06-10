@@ -1,0 +1,7 @@
+# remoção do .terraform
+IAC/.terraform
+
+IAC/.terraform.lock.hcl
+
+# Pasta vscode
+.vscode

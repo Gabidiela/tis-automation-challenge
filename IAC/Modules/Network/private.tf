@@ -21,3 +21,13 @@ resource "aws_subnet" "ec2_subnet_private_1b" {
   }
 
 }
+
+resource "aws_route_table_association" "ec2_private_rt_association_1a" {
+  subnet_id      = aws_subnet.ec2_subnet_private_1a.id
+  route_table_id = aws_route_table.ec2_nat_rt.id
+}
+
+resource "aws_route_table_association" "ec2_private_rt_association_1b" {
+  subnet_id      = aws_subnet.ec2_subnet_private_1b.id
+  route_table_id = aws_route_table.ec2_nat_rt.id
+}
