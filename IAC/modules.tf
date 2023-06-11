@@ -1,17 +1,10 @@
-module "network" {
-  source = "./Modules/Network"
-
-  vpc_name = var.vpc_name
-  region = var.region
-}
-
 module "instance" {
   source = "./Modules/EC2"
 
-  vpc_name = var.vpc_name
+  project_name = var.variables_ec2.project_name
 
-  vpc_id = module.network.vpc_id
-  private_subnet_1a = module.network.private_subnet_1a
+  vpc_id = var.variables_ec2.vpc_id
+  subnet_id = var.variables_ec2.subnet_id
   instance_ubuntu = var.variables_ec2.instance_ubuntu
   instance_windows = var.variables_ec2.instance_windows
   volume_settings   = var.variables_ec2.volume_settings

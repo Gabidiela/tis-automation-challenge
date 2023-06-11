@@ -1,4 +1,4 @@
-variable "vpc_name" {}
+variable "project_name" {}
 variable "vpc_id" {}
 variable "instance_ubuntu" {
   type = object({
@@ -20,7 +20,7 @@ variable "instance_windows" {
   })
 }
 
-variable "private_subnet_1a" {}
+variable "subnet_id" {}
 
 variable "volume_settings" {
  type = object({

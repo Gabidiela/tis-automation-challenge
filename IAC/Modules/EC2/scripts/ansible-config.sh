@@ -1,5 +1,5 @@
 # Atualização de repos
-sudo apt-get update -y
+sudo apt-get update 
 
 # Instalação do ansible
 sudo apt-get install -y ansible
