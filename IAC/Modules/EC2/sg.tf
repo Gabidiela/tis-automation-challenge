@@ -24,13 +24,3 @@ resource "aws_security_group" "ec2_sg" {
 }
 }
 
-# resource "aws_security_group_rule" "ec2_sg_ingress_rule" {    
-#     security_group_id = aws_security_group.ec2_sg.id
-#     type = "ingress"
-
-#     cidr_blocks = ["0.0.0.0/0"]
-#     from_port   = 22
-#     to_port     = 22
-#     protocol    = "tcp"
-
-# }

@@ -1,8 +1,10 @@
-# Atualização de repos
+#!/bin/bash
 sudo apt-get update 
 
 # Instalação do ansible
 sudo apt-get install -y ansible
+
+sudo systemctl enable ansible
 
 # Criação do diretório para o playbook do Ansible
 mkdir -p ansible_playbook

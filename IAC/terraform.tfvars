@@ -19,7 +19,7 @@ variables_ec2 = {
     instance_type = "t2.micro"  # "t4g.medium" "t3.medium"
     key_pair_name = "tis-automation"
     script_file_path = "scripts"
-    script_file_name = "nginx-config.bat"
+    script_file_name = "nginx-config.ps1"
   }
   volume_settings = {
     volume_size       = 30
