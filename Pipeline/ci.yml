@@ -22,6 +22,17 @@ steps:
   inputs:
     terraformVersion: $(terraformVersion)
   
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'aws'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/IAC'
+    backendServiceAWS: 'AWS-Default'
+    backendAWSBucketName: 'terraform-s3-bucket-stone'
+    backendAWSKey: 'state/terraform.tfstate'
+
+
+
 # - task: TerraformTaskV4@4
 #   inputs:
 #     provider: 'aws'
