@@ -6,14 +6,30 @@
 trigger:
 - main
 
+variables:
+- group: tis-group
+
 pool:
-  vmImage: ubuntu-latest
+  vmImage: $(vmImage)
 
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
+  
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: $(terraformVersion)
+  
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'aws'
+    command: 'init'
+    backendServiceAWS: 'AWS-Default'
+    backendAWSBucketName: 'terraform-s3-bucket-stone'
+    backendAWSKey: 'state/terraform.tfstate'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'aws'
+    command: 'apply'
+    environmentServiceNameAWS: 'AWS-Default'
