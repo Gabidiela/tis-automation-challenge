@@ -16,20 +16,22 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
   
+- script: ls -al
+  displayName: Visualizando Paths
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: $(terraformVersion)
   
-- task: TerraformTaskV4@4
-  inputs:
-    provider: 'aws'
-    command: 'init'
-    backendServiceAWS: 'AWS-Default'
-    backendAWSBucketName: 'terraform-s3-bucket-stone'
-    backendAWSKey: 'state/terraform.tfstate'
+# - task: TerraformTaskV4@4
+#   inputs:
+#     provider: 'aws'
+#     command: 'init'
+#     backendServiceAWS: 'AWS-Default'
+#     backendAWSBucketName: 'terraform-s3-bucket-stone'
+#     backendAWSKey: 'state/terraform.tfstate'
 
-- task: TerraformTaskV4@4
-  inputs:
-    provider: 'aws'
-    command: 'apply'
-    environmentServiceNameAWS: 'AWS-Default'
+# - task: TerraformTaskV4@4
+#   inputs:
+#     provider: 'aws'
+#     command: 'apply'
+#     environmentServiceNameAWS: 'AWS-Default'
