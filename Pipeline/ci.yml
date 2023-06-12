@@ -1,10 +1,13 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+name: "tis-automation-ci-$(Build.BuildId)"
 
 trigger:
-- main
+  branch:
+    include:
+      - main
+  paths:
+    exclude:
+      - Pipeline/**
+      - README*
 
 variables:
 - group: tis-group # grupo que armazena todas as variáveis externas usadas neste pipeline
@@ -12,35 +15,43 @@ variables:
 pool:
   vmImage: $(vmImage) 
 
-steps:
-- script: ls -al
-  displayName: Visualizando Paths
+stages:
+  - stage: CI
+    displayName: Provisisonando Infraestrutura
+    pool: 
+      vmImage: $(vmImage) 
+    jobs:
+    - job: ci_terraform
+      displayName: Criando Hosts - IAC
+      steps:
+      - script: ls -al
+        displayName: Visualizando Paths
 
-- task: TerraformInstaller@1
-  inputs:
-    terraformVersion: $(terraformVersion) # variável de versão do terraform
-  
-- task: TerraformTaskV4@4
-  inputs:
-    provider: 'aws'
-    command: 'init'
-    workingDirectory: $(System.DefaultWorkingDirectory)/IAC
-    backendServiceAWS: $(serviceConnection) # variável de conexão com a aws
-    backendAWSBucketName: $(bucketName) # nome do bucket que contém o arquivo de estado do terraform
-    backendAWSKey: $(bucketKey) # caminho de acesso ao arquivo
+      - task: TerraformInstaller@1
+        inputs:
+          terraformVersion: $(terraformVersion) # variável de versão do terraform
+        
+      - task: TerraformTaskV4@4
+        inputs:
+          provider: 'aws'
+          command: 'init'
+          workingDirectory: $(System.DefaultWorkingDirectory)/IAC
+          backendServiceAWS: $(serviceConnection) # variável de conexão com a aws
+          backendAWSBucketName: $(bucketName) # nome do bucket que contém o arquivo de estado do terraform
+          backendAWSKey: $(bucketKey) # caminho de acesso ao arquivo
 
-- task: TerraformTaskV4@4
-  inputs:
-    provider: 'aws'
-    command: 'apply'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/IAC'
-    environmentServiceNameAWS: $(serviceConnection) # variável de conexão com a aws
+      - task: TerraformTaskV4@4
+        inputs:
+          provider: 'aws'
+          command: 'apply'
+          workingDirectory: '$(System.DefaultWorkingDirectory)/IAC'
+          environmentServiceNameAWS: $(serviceConnection) # variável de conexão com a aws
 
-# Para destruir esta infraestrutura, descomente a task abaixo e comente a task acima
+      # Para destruir esta infraestrutura, descomente a task abaixo e comente a task acima
 
-# - task: TerraformTaskV4@4
-#   inputs:
-#     provider: 'aws'
-#     command: 'destroy'
-#     workingDirectory: '$(System.DefaultWorkingDirectory)/IAC'
-#     environmentServiceNameAWS: 'AWS-Default'
+      # - task: TerraformTaskV4@4
+      #   inputs:
+      #     provider: 'aws'
+      #     command: 'destroy'
+      #     workingDirectory: '$(System.DefaultWorkingDirectory)/IAC'
+      #     environmentServiceNameAWS: 'AWS-Default'
