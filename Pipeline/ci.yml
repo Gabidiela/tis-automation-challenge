@@ -31,7 +31,12 @@ steps:
     backendAWSBucketName: 'terraform-s3-bucket-stone'
     backendAWSKey: 'state/terraform.tfstate'
 
-
+- task: TerraformTaskV4@4
+  inputs:
+    provider: 'aws'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/IAC'
+    environmentServiceNameAWS: 'AWS-Default'
 
 # - task: TerraformTaskV4@4
 #   inputs:
