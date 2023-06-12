@@ -1,7 +1,7 @@
 name: "tis-automation-ci-$(Build.BuildId)"
 
 trigger:
-  branch:
+  branches:
     include:
       - main
   paths:
